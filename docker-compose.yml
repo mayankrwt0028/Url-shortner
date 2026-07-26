@@ -1,0 +1,48 @@
+services:
+
+  db:
+    image: postgres:16-alpine
+    container_name: url-shortener-db
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Mayank@12
+      POSTGRES_DB: url_db
+
+
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  backend:
+    build: ./Backend
+    container_name: url-shortener-backend
+
+    ports:
+      - "5001:5001"
+
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: Mayank@12
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: url_db
+
+    depends_on:
+      - db
+
+
+  frontend:
+    build: ./frontend
+    container_name: url-shortener-frontend
+
+    ports:
+      - "5173:80"
+
+    depends_on:
+      - backend
+
+
+volumes:
+  postgres_data:
