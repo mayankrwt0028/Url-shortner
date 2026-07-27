@@ -16,7 +16,6 @@ function App() {
   const [error, setError] = useState("");
   const [apiStatus, setApiStatus] = useState("Checking...");
 
-
   const checkHealth = async () => {
     try {
       const response = await fetch(`${API_URL}/api/health`);
@@ -30,7 +29,6 @@ function App() {
       setApiStatus("Offline");
     }
   };
-
 
   const fetchUrls = async () => {
     try {
@@ -48,7 +46,6 @@ function App() {
       console.log("Unable to fetch URLs");
     }
   };
-
 
   const shortenUrl = async () => {
     if (!url.trim()) {
@@ -88,16 +85,13 @@ function App() {
 
       setUrl("");
 
-   
       await fetchUrls();
-
     } catch (error) {
       setError("Unable to connect to server");
     } finally {
       setLoading(false);
     }
   };
-
 
   const copyUrl = async () => {
     try {
@@ -110,14 +104,11 @@ function App() {
     }
   };
 
-
   const getStats = async (code = shortCode) => {
     try {
       setError("");
 
-      const response = await fetch(
-        `${API_URL}/api/url/stats/${code}`
-      );
+      const response = await fetch(`${API_URL}/api/url/stats/${code}`);
 
       const data = await response.json();
 
@@ -127,23 +118,18 @@ function App() {
       }
 
       setStats(data.data);
-
     } catch (error) {
       setError("Unable to connect to server");
     }
   };
 
-
   const deleteUrl = async (code = shortCode) => {
     try {
       setError("");
 
-      const response = await fetch(
-        `${API_URL}/api/url/${code}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`${API_URL}/api/url/${code}`, {
+        method: "DELETE",
+      });
 
       const data = await response.json();
 
@@ -162,12 +148,10 @@ function App() {
       setMessage("Short URL deleted successfully");
 
       await fetchUrls();
-
     } catch (error) {
       setError("Unable to connect to server");
     }
   };
-
 
   useEffect(() => {
     checkHealth();
@@ -176,42 +160,28 @@ function App() {
 
   return (
     <div className="app">
-
       <div className="container">
-
         {/* HEADER */}
 
         <header className="header">
-
           <div>
             <h1>URL Shortener</h1>
-
-           
           </div>
 
           <div className="status">
             <span
               className={
-                apiStatus === "Online"
-                  ? "status-dot online"
-                  : "status-dot"
+                apiStatus === "Online" ? "status-dot online" : "status-dot"
               }
             ></span>
-
             API {apiStatus}
           </div>
-
         </header>
 
-
-     
-
         <div className="card">
-
           <h2>Shorten your URL</h2>
 
           <div className="input-section">
-
             <input
               type="text"
               placeholder="Enter your long URL"
@@ -219,51 +189,27 @@ function App() {
               onChange={(e) => setUrl(e.target.value)}
             />
 
-            <button
-              onClick={shortenUrl}
-              disabled={loading}
-            >
+            <button onClick={shortenUrl} disabled={loading}>
               {loading ? "Creating..." : "Shorten URL"}
             </button>
-
           </div>
 
+          {message && <p className="success-message">{message}</p>}
 
-          {message && (
-            <p className="success-message">
-              {message}
-            </p>
-          )}
-
-          {error && (
-            <p className="error-message">
-              {error}
-            </p>
-          )}
-
-
-          
+          {error && <p className="error-message">{error}</p>}
 
           {shortUrl && (
             <div className="result-box">
-
               <h3>New Short URL</h3>
 
               <div className="short-url">
-                <a
-                  href={shortUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a href={shortUrl} target="_blank" rel="noreferrer">
                   {shortUrl}
                 </a>
               </div>
 
               <div className="buttons">
-
-                <button onClick={copyUrl}>
-                  Copy
-                </button>
+                <button onClick={copyUrl}>Copy</button>
 
                 <a
                   className="open-button"
@@ -274,9 +220,7 @@ function App() {
                   Open
                 </a>
 
-                <button onClick={() => getStats(shortCode)}>
-                  Get Stats
-                </button>
+                <button onClick={() => getStats(shortCode)}>Get Stats</button>
 
                 <button
                   className="delete-button"
@@ -284,62 +228,28 @@ function App() {
                 >
                   Delete
                 </button>
-
               </div>
-
             </div>
           )}
-
-
-  
-
-
-
         </div>
 
-
-
-
         <div className="urls-section">
-
           <div className="urls-header">
             <h2>Your Shortened URLs</h2>
-
-            
           </div>
 
-
           {urls.length === 0 ? (
-
-            <div className="empty-box">
-              No shortened URLs yet.
-            </div>
-
+            <div className="empty-box">No shortened URLs yet.</div>
           ) : (
-
             <div className="url-list">
-
               {urls.map((item) => (
-
-                <div
-                  className="url-card"
-                  key={item.id}
-                >
-
+                <div className="url-card" key={item.id}>
                   <div className="url-info">
+                    <div className="url-label">Original URL</div>
 
-                    <div className="url-label">
-                      Original URL
-                    </div>
+                    <p className="original-url">{item.original_url}</p>
 
-                    <p className="original-url">
-                      {item.original_url}
-                    </p>
-
-
-                    <div className="url-label">
-                      Short URL
-                    </div>
+                    <div className="url-label">Short URL</div>
 
                     <a
                       className="short-link"
@@ -349,29 +259,16 @@ function App() {
                     >
                       {API_URL}/api/url/{item.short_code}
                     </a>
-
                   </div>
 
-
                   <div className="url-right">
-
                     <div className="click-box">
+                      <strong>{item.clicks}</strong>
 
-                      <strong>
-                        {item.clicks}
-                      </strong>
-
-                      <span>
-                        Clicks
-                      </span>
-
+                      <span>Clicks</span>
                     </div>
 
-
                     <div className="url-actions">
-
-                   
-
                       <a
                         className="open-button"
                         href={`${API_URL}/api/url/${item.short_code}`}
@@ -383,31 +280,18 @@ function App() {
 
                       <button
                         className="delete-button"
-                        onClick={() =>
-                          deleteUrl(item.short_code)
-                        }
+                        onClick={() => deleteUrl(item.short_code)}
                       >
                         Delete
                       </button>
-
                     </div>
-
                   </div>
-
                 </div>
-
               ))}
-
             </div>
-
           )}
-
         </div>
-
-
-   
-   </div>
-
+      </div>
     </div>
   );
 }
