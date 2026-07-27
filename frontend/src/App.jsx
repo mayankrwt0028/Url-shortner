@@ -186,9 +186,7 @@ function App() {
           <div>
             <h1>URL Shortener</h1>
 
-            <p>
-              Make your long URLs short and easy to share.
-            </p>
+           
           </div>
 
           <div className="status">
@@ -295,43 +293,7 @@ function App() {
 
   
 
-          {stats && (
-            <div className="stats-box">
 
-              <h3>URL Statistics</h3>
-
-              <div className="stats-grid">
-
-                <div>
-                  <span>Original URL</span>
-                  <p>{stats.original_url}</p>
-                </div>
-
-                <div>
-                  <span>Short Code</span>
-                  <p>{stats.short_code}</p>
-                </div>
-
-                <div>
-                  <span>Clicks</span>
-                  <p className="click-count">
-                    {stats.clicks}
-                  </p>
-                </div>
-
-                <div>
-                  <span>Created At</span>
-                  <p>
-                    {new Date(
-                      stats.created_at
-                    ).toLocaleString()}
-                  </p>
-                </div>
-
-              </div>
-
-            </div>
-          )}
 
         </div>
 
@@ -343,12 +305,7 @@ function App() {
           <div className="urls-header">
             <h2>Your Shortened URLs</h2>
 
-            <button
-              className="refresh-button"
-              onClick={fetchUrls}
-            >
-              Refresh
-            </button>
+            
           </div>
 
 
@@ -413,11 +370,7 @@ function App() {
 
                     <div className="url-actions">
 
-                      <button
-                        onClick={() => getStats(item.short_code)}
-                      >
-                        Stats
-                      </button>
+                   
 
                       <a
                         className="open-button"
