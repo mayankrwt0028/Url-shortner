@@ -1,18 +1,5 @@
 services:
 
-  db:
-    image: postgres:16-alpine
-    container_name: url-shortener-db
-
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Mayank@12
-      POSTGRES_DB: url_db
-
-
-
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
 
 
   backend:
