@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import API_URL from "../config/api";
 
-const API_URL = "API_URL";
+
 
 function App() {
   const [url, setUrl] = useState("");
