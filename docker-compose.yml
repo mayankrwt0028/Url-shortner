@@ -1,35 +1,17 @@
 services:
-
-
-
   backend:
     build: ./Backend
     container_name: url-shortener-backend
-
     ports:
       - "5001:5001"
-
     environment:
-      DB_USER: postgres
-      DB_PASSWORD: Mayank@12
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: url_db
-
-    depends_on:
-      - db
-
+      DATABASE_URL: ${DATABASE_URL}
+      PORT: 5001
 
   frontend:
     build: ./frontend
     container_name: url-shortener-frontend
-
     ports:
-      - "5173:80"
-
+      - "5173:4173"
     depends_on:
       - backend
-
-
-volumes:
-  postgres_data:
